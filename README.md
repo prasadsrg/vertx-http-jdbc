@@ -13,6 +13,21 @@ You can run or debug the example in your IDE by just right clicking the main cla
 
 The pom.xml uses the Maven shade plugin to assemble the application and all it's dependencies into a single "fat" jar.
 
+Using MY-SQL database
+create database test;
+
+CREATE TABLE profile (
+  id varchar(10) NOT NULL,
+  name varchar(100) DEFAULT NULL,
+  address_id varchar(10) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+INSERT INTO test.profile (id, name, address_id) VALUES ('1', 'Om', '1');
+INSERT INTO test.profile (id, name, address_id) VALUES ('2', 'abcd', '1');
+INSERT INTO test.profile (id, name, address_id) VALUES ('3', 'def', '1');
+INSERT INTO test.profile (id, name, address_id) VALUES ('4', 'xyz', '1');
+
 To run with maven
 
     mvn compile exec:java
@@ -32,4 +47,4 @@ You can also run the fat jar with maven:
 
     mvn package exec:exec@run-app
 
-Now point your browser at http://localhost:8080
+Now point your browser at http://localhost:9999

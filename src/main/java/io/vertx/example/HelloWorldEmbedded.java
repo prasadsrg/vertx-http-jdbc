@@ -19,37 +19,37 @@ public class HelloWorldEmbedded {
     Vertx.vertx()
     	.createHttpServer()
     	.requestHandler(req -> { 
-    		 req.response().end(getData()); 
-    		
+    		// req.response().end(getData()); 
+    		 JDBCClient client = getConnection();
+    		 client.getConnection(res -> { 
+    			if (res.failed()) {
+    		        return;
+    		      }
+    			System.out.println("---------res---------");
+    			  System.out.println(res);
+    		      if (res.succeeded()) { 
+    		 
+    		        SQLConnection connection = res.result(); 
+    		 
+    		        connection.query("SELECT * FROM profile", res2 -> { 
+    		          if (res2.succeeded()) { 
+    		 
+    		            ResultSet rs = res2.result(); 
+    		            req.response().end(rs.getRows().toString());
+    		           
+    		          } 
+    		        }); 
+    		      } else { 
+    		        // Failed to get connection - deal with it 
+    		      } 
+    		    }); 
     		
     	})
     	.listen(9999);
   }
   
   public static String getData(){
-	  JDBCClient client = getConnection();
-		 client.getConnection(res -> { 
-			if (res.failed()) {
-		        return;
-		      }
-			System.out.println("---------res---------");
-			  System.out.println(res);
-		      if (res.succeeded()) { 
-		 
-		        SQLConnection connection = res.result(); 
-		 
-		        connection.query("SELECT * FROM profile", res2 -> { 
-		          if (res2.succeeded()) { 
-		 
-		            ResultSet rs = res2.result(); 
-
-		           
-		          } 
-		        }); 
-		      } else { 
-		        // Failed to get connection - deal with it 
-		      } 
-		    }); 
+	  
 		 return "abcd";
   }
   
