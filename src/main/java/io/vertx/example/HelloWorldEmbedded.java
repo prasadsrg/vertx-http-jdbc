@@ -10,7 +10,7 @@ import javax.sql.DataSource;
  
 
 /**
- * @author <a href="http://tfox.org">Tim Fox</a>
+ * @author 
  */
 public class HelloWorldEmbedded {
 
@@ -18,15 +18,13 @@ public class HelloWorldEmbedded {
     // Create an HTTP server which simply returns "Hello World!" to each request.
     Vertx.vertx()
     	.createHttpServer()
-    	.requestHandler(req -> { 
+    	.requestHandler( req -> { 
     		// req.response().end(getData()); 
     		 JDBCClient client = getConnection();
     		 client.getConnection(res -> { 
     			if (res.failed()) {
     		        return;
     		      }
-    			System.out.println("---------res---------");
-    			  System.out.println(res);
     		      if (res.succeeded()) { 
     		 
     		        SQLConnection connection = res.result(); 
@@ -45,13 +43,13 @@ public class HelloWorldEmbedded {
     		    }); 
     		
     	})
-    	.listen(9999);
+    	.listen(8008);
   }
   
-  public static String getData(){
-	  
-		 return "abcd";
-  }
+//  public static String getData(){
+//	  
+//		 return "abcd";
+//  }
   
   public static JDBCClient getConnection() {
 	    JsonObject config = new JsonObject() 
